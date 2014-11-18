@@ -9,17 +9,29 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet weak var myText: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        var myDefault = NSUserDefaults.standardUserDefaults()
+        var myStr = myDefault.stringForKey("myString")
+        if let tmpstr = myStr{
+            myText.text = tmpstr
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    @IBAction func tapReturnKey(sender: UITextField) {
+        var myDefault = NSUserDefaults.standardUserDefaults()
+        myDefault.setObject(sender.text, forKey: "myString")
+        myDefault.synchronize()
+    }
 }
 
